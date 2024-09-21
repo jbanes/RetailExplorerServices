@@ -7,10 +7,28 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
     ">
     <bean class="com.invirgance.convirgance.web.service.SelectService">
+        <property name="parameters">
+            <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                <property name="name" value="franchise" />
+            </bean>
+        </property>
         <property name="binding">
             <bean class="com.invirgance.convirgance.web.binding.QueryBinding">
                 <property name="jndiName" value="jdbc/retail" />
-                <property name="sql" value="select * from stores where &quot;id&quot; > 0"/>
+                <property name="sql">
+                    <value>
+                    <![CDATA[
+                        select
+                            "id",
+                            "Name",
+                            "StoreNumber",
+                            "CountryCode",
+                            "FranchiseId"
+                        from stores
+                        where "FranchiseId" = :franchise
+                    ]]>
+                    </value>
+                </property>
             </bean>
         </property>
         <property name="output">
