@@ -8,9 +8,11 @@
     ">
     <bean class="com.invirgance.convirgance.web.service.SelectService">
         <property name="parameters">
-            <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
-                <property name="name" value="franchise" />
-            </bean>
+            <list>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="franchise" />
+                </bean>
+            </list>
         </property>
         <property name="binding">
             <bean class="com.invirgance.convirgance.web.binding.QueryBinding">
