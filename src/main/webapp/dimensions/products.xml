@@ -10,10 +10,19 @@
         <property name="parameters">
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="franchise" />
+                </bean>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="brand" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="category" />
+                </bean>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="type" />
+                </bean>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="subtype" />
                 </bean>
             </list>
         </property>
@@ -23,7 +32,7 @@
                 <property name="sql">
                     <value>
                     <![CDATA[
-                        select
+                        select distinct
                             p."id",
                             p."Name",
                             p."Price",
@@ -34,9 +43,14 @@
                         from products p
                         join brands b on b."id" = p."BrandId"
                         join categories c on c."id" = p."CategoryId"
-                        where (p."BrandId" = :brand or :brand is null)
-                        and (p."CategoryId" = :category or :category is null)
-                        and p."id" > 0
+                        join (select distinct "ProductId", "FranchiseId" from sales) s on s."ProductId" = p."id"
+                        where p."id" > 0
+                        and (p."BrandId" = :brand or :brand is null)
+                        and (c."Name" = :category or :category is null)
+                        and (c."Type" = :type or :type is null)
+                        and (p."CategoryId" = :subtype or :subtype is null)
+                        and (s."FranchiseId" = :franchise or :franchise is null)
+                        order by p."id"
                     ]]>
                     </value>
                 </property>

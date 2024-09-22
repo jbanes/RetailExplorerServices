@@ -7,10 +7,32 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
     ">
     <bean class="com.invirgance.convirgance.web.service.SelectService">
+        <property name="parameters">
+            <list>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="brand" />
+                </bean>
+            </list>
+        </property>
         <property name="binding">
             <bean class="com.invirgance.convirgance.web.binding.QueryBinding">
                 <property name="jndiName" value="jdbc/retail" />
-                <property name="sql" value="select * from categories where &quot;id&quot; > 0"/>
+                <property name="sql">
+                    <value>
+                    <![CDATA[
+                        select distinct
+                            c."id",
+                            c."Name",
+                            c."Type",
+                            c."SubType"
+                        from categories c
+                        join products p on p."CategoryId" = c."id"
+                        where c."id" > 0
+                        and (p."BrandId" = :brand or :brand is null)
+                        order by c."id"
+                    ]]>
+                    </value>
+                </property>
             </bean>
         </property>
         <property name="output">
