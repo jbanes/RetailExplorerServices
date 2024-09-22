@@ -28,7 +28,9 @@
                             p."Name",
                             p."Price",
                             b."Name" as "BrandName",
-                            c."Name" as "CategoryName"
+                            c."Name" as "CategoryName",
+                            c."Type" as "Type",
+                            c."SubType" as "SubType"
                         from products p
                         join brands b on b."id" = p."BrandId"
                         join categories c on c."id" = p."CategoryId"
