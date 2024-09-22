@@ -24,15 +24,17 @@
                     <value>
                     <![CDATA[
                         select
-                            "id",
-                            "Name",
-                            "Price",
-                            "BrandId",
-                            "CategoryId"
-                        from products
-                        where ("BrandId" = :brand or :brand is null)
-                        and ("CategoryId" = :category or :category is null)
-                        and "id" > 0
+                            p."id",
+                            p."Name",
+                            p."Price",
+                            b."Name" as "BrandName",
+                            c."Name" as "CategoryName"
+                        from products p
+                        join brands b on b."id" = p."BrandId"
+                        join categories c on c."id" = p."CategoryId"
+                        where (p."BrandId" = :brand or :brand is null)
+                        and (p."CategoryId" = :category or :category is null)
+                        and p."id" > 0
                     ]]>
                     </value>
                 </property>
