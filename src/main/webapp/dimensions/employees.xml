@@ -9,6 +9,9 @@
         <property name="parameters">
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="franchise" />
+                </bean>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="store" />
                 </bean>
             </list>
@@ -23,9 +26,12 @@
                             "id",
                             "Firstname",
                             "Lastname",
-                            "Sex"
-                        from employees
-                        and "StoreId" = :store
+                            "Sex",
+                            s."StoreNumber"
+                        from employees e
+                        join stores s on s."id" = e."StoreId"
+                        and (e."StoreId" = :store or :store is null)
+                        and (s."FranchiseId" = :franchise or :franchise is null)
                     ]]>
                     </value>
                 </property>
