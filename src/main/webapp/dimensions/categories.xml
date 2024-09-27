@@ -10,6 +10,7 @@
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="brand" />
+                    <property name="defaultValue" value="0" />
                 </bean>
             </list>
         </property>
@@ -24,10 +25,10 @@
                             c."Name",
                             c."Type",
                             c."SubType"
-                        from categories c
-                        join products p on p."CategoryId" = c."id"
+                        from retail.categories c
+                        join retail.products p on p."CategoryId" = c."id"
                         where c."id" > 0
-                        and (p."BrandId" = :brand or :brand is null)
+                        and (p."BrandId" = cast(:brand as int) or :brand = '0')
                         order by c."id"
                     ]]>
                     </value>

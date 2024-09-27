@@ -10,9 +10,11 @@
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="franchise" />
+                    <property name="defaultValue" value="0" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="store" />
+                    <property name="defaultValue" value="0" />
                 </bean>
             </list>
         </property>
@@ -23,15 +25,17 @@
                     <value>
                     <![CDATA[
                         select
-                            "id",
-                            "Firstname",
-                            "Lastname",
-                            "Sex",
+                            e."id",
+                            e."Firstname",
+                            e."Lastname",
+                            e."Sex",
                             s."StoreNumber"
-                        from employees e
-                        join stores s on s."id" = e."StoreId"
-                        and (e."StoreId" = :store or :store is null)
-                        and (s."FranchiseId" = :franchise or :franchise is null)
+                        from retail.employees e
+                        join retail.stores s on s."id" = e."StoreId"
+--                        and (e."StoreId" = :store or :store is null)
+--                        and (s."FranchiseId" = :franchise or :franchise is null)
+                        and (e."StoreId" = cast(:store as int) or :store = '0')
+                        and (s."FranchiseId" = cast(:franchise as int) or :franchise = '0')
                     ]]>
                     </value>
                 </property>

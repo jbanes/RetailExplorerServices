@@ -15,11 +15,11 @@
                         select 
                             b."id",
                             b."Name",
-                            count(unique c."Name") as "Categories", 
-                            count(p."id") as "Products"
-                        from brands b
-                        join products p on p."BrandId" = b."id"
-                        join categories c on p."CategoryId" = c."id"
+                            count(distinct c."Name") as "Categories", 
+                            count(distinct p."id") as "Products"
+                        from retail.brands b
+                        join retail.products p on p."BrandId" = b."id"
+                        join retail.categories c on p."CategoryId" = c."id"
                         where b."id" > 0
                         group by b."id", b."Name"
                         order by b."id"

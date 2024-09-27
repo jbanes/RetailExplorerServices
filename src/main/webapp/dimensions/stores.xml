@@ -24,9 +24,11 @@
                             "Name",
                             "StoreNumber",
                             "CountryCode",
-                            "FranchiseId"
-                        from stores
-                        where "FranchiseId" = :franchise
+                            "FranchiseId",
+                            "Employees"
+                        from retail.stores
+--                        where "FranchiseId" = :franchise
+                        where "FranchiseId" = cast(:franchise as int)
                     ]]>
                     </value>
                 </property>

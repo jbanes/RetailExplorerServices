@@ -10,18 +10,23 @@
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="franchise" />
+                    <property name="defaultValue" value="0" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="brand" />
+                    <property name="defaultValue" value="0" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="category" />
+                    <property name="defaultValue" value="0" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="type" />
+                    <property name="defaultValue" value="0" />
                 </bean>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="subtype" />
+                    <property name="defaultValue" value="0" />
                 </bean>
             </list>
         </property>
@@ -39,16 +44,16 @@
                             c."Name" as "CategoryName",
                             c."Type" as "Type",
                             c."SubType" as "SubType"
-                        from products p
-                        join brands b on b."id" = p."BrandId"
-                        join categories c on c."id" = p."CategoryId"
-                        join (select distinct "ProductId", "FranchiseId" from sales) s on s."ProductId" = p."id"
+                        from retail.products p
+                        join retail.brands b on b."id" = p."BrandId"
+                        join retail.categories c on c."id" = p."CategoryId"
+                        join retail.franchise_product_xref x on x."ProductId" = p."id"
                         where p."id" > 0
-                        and (p."BrandId" = :brand or :brand is null)
-                        and (c."Name" = :category or :category is null)
-                        and (c."Type" = :type or :type is null)
-                        and (p."CategoryId" = :subtype or :subtype is null)
-                        and (s."FranchiseId" = :franchise or :franchise is null)
+                        and (p."BrandId" = cast(:brand as int) or :brand = '0')
+                        and (c."Name" = :category or :category = '0')
+                        and (c."Type" = :type or :type = '0')
+                        and (p."CategoryId" = cast(:subtype as int) or :subtype = '0')
+                        and (x."FranchiseId" = cast(:franchise as int) or :franchise = '0')
                         order by p."id"
                     ]]>
                     </value>
