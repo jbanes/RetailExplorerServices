@@ -9,7 +9,7 @@
         <property name="parameters">
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
-                    <property name="name" value="franchise" />
+                    <property name="name" value="store" />
                 </bean>
             </list>
         </property>
@@ -21,12 +21,11 @@
                     <![CDATA[
                         select
                             "id",
-                            "Name",
-                            "StoreNumber",
-                            "CountryCode",
-                            "FranchiseId"
-                        from stores
-                        where "FranchiseId" = :franchise
+                            "Firstname",
+                            "Lastname",
+                            "Sex"
+                        from employees
+                        and "StoreId" = :store
                     ]]>
                     </value>
                 </property>
