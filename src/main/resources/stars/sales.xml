@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    ">
+    
+    <bean id="brands" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="BRANDS"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="categories" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="CATEGORIES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="dates" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="DATES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="employees" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="EMPLOYEES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="franchises" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="FRANCHISES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="products" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="PRODUCTS"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+
+    <bean id="skus" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="SKUS"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+
+    <bean id="stores" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="STORES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+
+    <bean id="times" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="TIMES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+
+    <bean id="zipcodes" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="ZIPCODES"/>
+        <property name="primaryKey" value="id"/>
+        <property name="foreignKeys">
+            <list></list>
+        </property>
+    </bean>
+    
+    <bean id="sales" class="com.invirgance.convirgance.olap.sql.Table">
+        <property name="name" value="SALES"/>
+        <property name="foreignKeys">
+            <list>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="FranchiseId" />
+                    <property name="target">
+                        <ref bean="franchises" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="StoreId" />
+                    <property name="target">
+                        <ref bean="stores" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="BrandId" />
+                    <property name="target">
+                        <ref bean="brands" />
+                    </property>
+                </bean>
+<!--                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="CategoryId" />
+                    <property name="target">
+                        <ref bean="categories" />
+                    </property>
+                </bean>-->
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="ProductId" />
+                    <property name="target">
+                        <ref bean="products" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="SkuId" />
+                    <property name="target">
+                        <ref bean="skus" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="DateId" />
+                    <property name="target">
+                        <ref bean="dates" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="TimeId" />
+                    <property name="target">
+                        <ref bean="times" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="CheckoutEmployeeId" />
+                    <property name="target">
+                        <ref bean="employees" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    <bean class="com.invirgance.convirgance.olap.sql.Database">
+        <property name="name" value="RETAIL"/>
+        <property name="tables">
+            <list>
+                <ref bean="sales"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.invirgance.convirgance.olap.Star">
+        <property name="fact">
+            <ref bean="sales"/>
+        </property>
+        <property name="dimensions">
+            <list>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Brand Name"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="brands"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Year"/>
+                <property name="column" value="Year"/>
+                <property name="table">
+                    <ref bean="dates"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Month"/>
+                <property name="column" value="Month"/>
+                <property name="table">
+                    <ref bean="dates"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Day"/>
+                <property name="column" value="Day"/>
+                <property name="table">
+                    <ref bean="dates"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Month Name"/>
+                <property name="column" value="MonthName"/>
+                <property name="table">
+                    <ref bean="dates"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Day Name"/>
+                <property name="column" value="DayName"/>
+                <property name="table">
+                    <ref bean="dates"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Employee First Name"/>
+                <property name="column" value="Firstname"/>
+                <property name="table">
+                    <ref bean="employees"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Employee Last Name"/>
+                <property name="column" value="Lastname"/>
+                <property name="table">
+                    <ref bean="employees"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Employee Sex"/>
+                <property name="column" value="Sex"/>
+                <property name="table">
+                    <ref bean="employees"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Franchise Name"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="franchises"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="International"/>
+                <property name="column" value="International"/>
+                <property name="table">
+                    <ref bean="franchises"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product Name"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="products"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product MSRP"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="products"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product Size"/>
+                <property name="column" value="Size"/>
+                <property name="table">
+                    <ref bean="skus"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product Size"/>
+                <property name="column" value="Color"/>
+                <property name="table">
+                    <ref bean="skus"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Store Name"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="stores"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Store Number"/>
+                <property name="column" value="StoreNumber"/>
+                <property name="table">
+                    <ref bean="stores"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Zip Code"/>
+                <property name="column" value="ZipCode"/>
+                <property name="table">
+                    <ref bean="stores"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Country Code"/>
+                <property name="column" value="CountryCode"/>
+                <property name="table">
+                    <ref bean="stores"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Sale Hour"/>
+                <property name="column" value="Hour"/>
+                <property name="table">
+                    <ref bean="times"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Sale Minute"/>
+                <property name="column" value="Minute"/>
+                <property name="table">
+                    <ref bean="times"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Sale Time"/>
+                <property name="column" value="TwelveHour"/>
+                <property name="table">
+                    <ref bean="times"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Sale Time (24hr)"/>
+                <property name="column" value="TwentyFourHour"/>
+                <property name="table">
+                    <ref bean="times"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Area Name"/>
+                <property name="column" value="AreaName"/>
+                <property name="table">
+                    <ref bean="zipcodes"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="City Name"/>
+                <property name="column" value="CityName"/>
+                <property name="table">
+                    <ref bean="zipcodes"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="District Name"/>
+                <property name="column" value="DistrictName"/>
+                <property name="table">
+                    <ref bean="zipcodes"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Locale Name"/>
+                <property name="column" value="LocaleName"/>
+                <property name="table">
+                    <ref bean="zipcodes"/>
+                </property>
+            </bean>
+            </list>
+        </property>
+        <property name="measures">
+            <list>
+            <bean class="com.invirgance.convirgance.olap.measures.SumMeasure">
+                <property name="name" value="Product Sales"/>
+                <property name="metric">
+                    <bean class="com.invirgance.convirgance.olap.Metric">
+                        <property name="column" value="Quantity"/>
+                        <property name="table">
+                            <ref bean="sales"/>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+            </list>
+        </property>
+    </bean>
+</beans>
