@@ -261,7 +261,7 @@
                 </property>
             </bean>
             <bean class="com.invirgance.convirgance.olap.Dimension">
-                <property name="name" value="Product Size"/>
+                <property name="name" value="Product Color"/>
                 <property name="column" value="Color"/>
                 <property name="table">
                     <ref bean="skus"/>
