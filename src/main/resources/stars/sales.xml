@@ -356,10 +356,32 @@
         <property name="measures">
             <list>
             <bean class="com.invirgance.convirgance.olap.measures.SumMeasure">
-                <property name="name" value="Product Sales"/>
+                <property name="name" value="Units Sold"/>
                 <property name="metric">
                     <bean class="com.invirgance.convirgance.olap.Metric">
                         <property name="column" value="Quantity"/>
+                        <property name="table">
+                            <ref bean="sales"/>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.measures.SumMeasure">
+                <property name="name" value="Total Sale $"/>
+                <property name="metric">
+                    <bean class="com.invirgance.convirgance.olap.Metric">
+                        <property name="column" value="TotalPrice"/>
+                        <property name="table">
+                            <ref bean="sales"/>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.measures.AverageMeasure">
+                <property name="name" value="Average Sale $"/>
+                <property name="metric">
+                    <bean class="com.invirgance.convirgance.olap.Metric">
+                        <property name="column" value="TotalPrice"/>
                         <property name="table">
                             <ref bean="sales"/>
                         </property>
