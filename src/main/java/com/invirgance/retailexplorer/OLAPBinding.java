@@ -130,12 +130,16 @@ public class OLAPBinding implements Binding
         Measure measure;
         Dimension dimension;
         
+        JSONArray<String> dimensions = (JSONArray<String>)parameters.getJSONArray("dimensions");
+        JSONArray<String> measures = (JSONArray<String>)parameters.getJSONArray("measures");
+        
         if(star == null) loadStar();
+        if(parameters.getJSONArray("dimensions").isEmpty() && parameters.getJSONArray("measures").isEmpty()) return new JSONArray<>();
         
         generator = new ReportGenerator(star);
         dbms = new DBMS(getDataSource());
         
-        for(String name : (JSONArray<String>)parameters.getJSONArray("dimensions"))
+        for(String name : dimensions)
         {
             dimension = star.getDimension(name);
             
@@ -144,7 +148,7 @@ public class OLAPBinding implements Binding
             generator.addDimension(dimension);
         }
         
-        for(String name : (JSONArray<String>)parameters.getJSONArray("measures"))
+        for(String name : measures)
         {
             measure = star.getMeasure(name);
             
