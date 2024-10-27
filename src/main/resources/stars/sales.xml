@@ -108,12 +108,12 @@
                         <ref bean="brands" />
                     </property>
                 </bean>
-<!--                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
                     <property name="sourceKey" value="CategoryId" />
                     <property name="target">
                         <ref bean="categories" />
                     </property>
-                </bean>-->
+                </bean>
                 <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
                     <property name="sourceKey" value="ProductId" />
                     <property name="target">
@@ -152,7 +152,17 @@
         <property name="name" value="RETAIL"/>
         <property name="tables">
             <list>
+                <ref bean="brands"/>
+                <ref bean="categories"/>
+                <ref bean="dates"/>
+                <ref bean="employees"/>
+                <ref bean="franchises"/>
+                <ref bean="products"/>
                 <ref bean="sales"/>
+                <ref bean="skus"/>
+                <ref bean="stores"/>
+                <ref bean="times"/>
+                <ref bean="zipcodes"/>
             </list>
         </property>
     </bean>
@@ -167,6 +177,27 @@
                 <property name="column" value="Name"/>
                 <property name="table">
                     <ref bean="brands"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Category"/>
+                <property name="column" value="Name"/>
+                <property name="table">
+                    <ref bean="categories"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product Type"/>
+                <property name="column" value="Type"/>
+                <property name="table">
+                    <ref bean="categories"/>
+                </property>
+            </bean>
+            <bean class="com.invirgance.convirgance.olap.Dimension">
+                <property name="name" value="Product Subtype"/>
+                <property name="column" value="SubType"/>
+                <property name="table">
+                    <ref bean="categories"/>
                 </property>
             </bean>
             <bean class="com.invirgance.convirgance.olap.Dimension">
