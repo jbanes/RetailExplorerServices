@@ -139,6 +139,12 @@
                     </property>
                 </bean>
                 <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
+                    <property name="sourceKey" value="ZipCodeId" />
+                    <property name="target">
+                        <ref bean="zipcodes" />
+                    </property>
+                </bean>
+                <bean class="com.invirgance.convirgance.olap.sql.ForeignKey">
                     <property name="sourceKey" value="CheckoutEmployeeId" />
                     <property name="target">
                         <ref bean="employees" />
