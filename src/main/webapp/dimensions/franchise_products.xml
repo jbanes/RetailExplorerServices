@@ -9,6 +9,10 @@
         <property name="parameters">
             <list>
                 <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
+                    <property name="name" value="franchise" />
+                    <property name="defaultValue" value="0" />
+                </bean>
+                <bean class="com.invirgance.convirgance.web.parameter.RequestParameter">
                     <property name="name" value="brand" />
                     <property name="defaultValue" value="0" />
                 </bean>
@@ -43,11 +47,13 @@
                         from retail.products p
                         join retail.brands b on b."id" = p."BrandId"
                         join retail.categories c on c."id" = p."CategoryId"
+                        join retail.franchise_product_xref x on x."ProductId" = p."id"
                         where p."id" > 0
                         and (p."BrandId" = cast(:brand as int) or :brand = '0')
                         and (c."Name" = :category or :category = '0')
                         and (c."Type" = :type or :type = '0')
                         and (p."CategoryId" = cast(:subtype as int) or :subtype = '0')
+                        and (x."FranchiseId" = cast(:franchise as int) or :franchise = '0')
                         order by p."id"
                     ]]>
                     </value>
